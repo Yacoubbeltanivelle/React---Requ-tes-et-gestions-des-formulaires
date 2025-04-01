@@ -37,7 +37,7 @@ function App() {
     console.log("Produit créé :", data);
   }
 
-  // Ajouter un produit via POST
+  // Modifier un produit via Put
   async function putProducts(id) {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
       method: "PUT",
@@ -56,6 +56,16 @@ function App() {
     const data = await response.json();
     alert(`Le produit avec l'id ${data.id} a été modifié`);
     console.log("Produit modifié :", data);
+  }
+
+  // Supprimer un produit via DELETE
+  async function deleteProducts(id) {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    alert(`Le produit avec l'id ${data.id} a été supprimé`);
+    console.log("Produit supprimé :", data);
   }
 
   return (
@@ -80,7 +90,13 @@ function App() {
                   variant="warning"
                   onClick={() => putProducts(product.id)}
                 >
-                  Modifier le produit complet
+                  Modifier le prix du produit
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => deleteProducts(product.id)}
+                >
+                  Modifier le prix du produit
                 </Button>
               </Card.Body>
             </Card>
