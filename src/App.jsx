@@ -12,10 +12,18 @@ function App() {
     async function fetchProducts() {
       try {
         const response = await fetch("https://fakestoreapi.com/products");
+        if (!response.ok) {
+          throw new Error(
+            `Erreur HTTP: ${
+              response.statusText ? response.statusText + " - " : ""
+            }${response.status}`
+          );
+        }
+
         const data = await response.json();
         setProducts(data);
       } catch (err) {
-        setError(err.message);
+        setError("Pas de connexion.." + err.message);
       } finally {
         setLoading(false);
       }
@@ -43,13 +51,20 @@ function App() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(
+          `Erreur HTTP: ${
+            response.statusText ? response.statusText + " - " : ""
+          }${response.status}`
+        );
+      }
+
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été créé`);
       console.log("Produit créé :", data);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err.message);
+      alert(`Le produit n'a pu etre ajouté`);
     }
   }
 
@@ -69,21 +84,27 @@ function App() {
           category: "electronics",
         }),
       });
+      if (!response.ok) {
+        throw new Error(
+          `Erreur HTTP: ${
+            response.statusText ? response.statusText + " - " : ""
+          }${response.status}`
+        );
+      }
 
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été modifié`);
       console.log("Produit modifié :", data);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err.message);
+      alert(`Le produit n'a pu etre modifié`);
     }
   }
 
   // Modifier partiellement un produit
   async function patchProducts(id) {
     try {
-      const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      const response = await fetch(`https://fakestoreapi.com/products/${e}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -92,13 +113,20 @@ function App() {
           price: 39.99,
         }),
       });
+      if (!response.ok) {
+        throw new Error(
+          `Erreur HTTP: ${
+            response.statusText ? response.statusText + " - " : ""
+          }${response.status}`
+        );
+      }
+
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été modifié`);
       console.log("Produit modifié :", data);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err.message);
+      alert(`Le produit n'a pu etre partiellement modifié`);
     }
   }
 
@@ -112,9 +140,8 @@ function App() {
       alert(`Le produit avec l'id ${data.id} a été supprimé`);
       console.log("Produit supprimé :", data);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log(err.message);
+      alert(`Le produit n'a pu etre supprimé`);
     }
   }
 
