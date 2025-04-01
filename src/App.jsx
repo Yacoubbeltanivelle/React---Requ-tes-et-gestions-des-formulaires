@@ -58,6 +58,22 @@ function App() {
     console.log("Produit modifié :", data);
   }
 
+  // Modifier partiellement un produit
+  async function patchProducts(id) {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        price: 39.99,
+      }),
+    });
+    const data = await response.json();
+    alert(`Le produit avec l'id ${data.id} a été modifié`);
+    console.log("Produit modifié :", data);
+  }
+
   // Supprimer un produit via DELETE
   async function deleteProducts(id) {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
@@ -83,12 +99,12 @@ function App() {
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text className="text">{product.description}</Card.Text>
                 <Card.Text className="text">Prix : {product.price} €</Card.Text>
-                <Button onClick={postProducts}>
+                <Button onClick={() => putProducts(product.id)}>
                   Modifier le produit complet
                 </Button>
                 <Button
                   variant="warning"
-                  onClick={() => putProducts(product.id)}
+                  onClick={() => patchProducts(product.id)}
                 >
                   Modifier le prix du produit
                 </Button>
@@ -96,7 +112,7 @@ function App() {
                   variant="danger"
                   onClick={() => deleteProducts(product.id)}
                 >
-                  Modifier le prix du produit
+                  Supprimer le produit
                 </Button>
               </Card.Body>
             </Card>
