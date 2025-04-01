@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("https://fakestoreapi.com/products");
+        const response = await fetch("https://fakestoreapi.com/products/7777");
         if (!response.ok) {
           throw new Error(
             `Erreur HTTP: ${
@@ -23,7 +23,10 @@ function App() {
         const data = await response.json();
         setProducts(data);
       } catch (err) {
-        setError("Pas de connexion.." + err.message);
+        setError(
+          "Il y a un problème de connexion avec le serveur...... " + err.message
+        );
+        console.log(err.message);
       } finally {
         setLoading(false);
       }
@@ -37,7 +40,7 @@ function App() {
   // Ajouter un produit via POST
   async function postProducts() {
     try {
-      const response = await fetch("https://fakestoreapi.com/products", {
+      const response = await fetch("https://fakestoreapi.com/products3998", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
